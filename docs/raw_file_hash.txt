@@ -1,0 +1,5 @@
+
+Algorithm : SHA256
+Hash      : 43465A06F2CCF7C8B5BD2892BC7DEFB52F97487934FE93B16AE4C3936424676D
+Path      : C:\Users\berk-\ecommerce-repeat-purchase\data\raw\Online Retail.xlsx
+
