@@ -61,13 +61,9 @@ October. The selected model is four-feature logistic regression with a
 
 
 | Metric | October validation | November check |
-
 | --- | ---: | ---: |
-
 | Precision | 45.34% | 55.60% |
-
 | Recall | 57.32% | 58.46% |
-
 | Average precision (AP) | 0.539 | 0.635 |
 
 
@@ -101,4 +97,5 @@ November: 784 true positives, 626 false positives,
 \- Source data is historical; deployment on current customers would require
 
 &#x20; further validation.
+
 
