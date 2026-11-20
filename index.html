@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Repeat Purchase Explorer</title>
+  <style>
+    body {
+      max-width: 760px;
+      margin: 48px auto;
+      padding: 0 20px;
+      background: #f3f6fa;
+      color: #17283c;
+      font: 16px/1.6 system-ui, sans-serif;
+    }
+    form, #result:not(:empty) {
+      background: white;
+      padding: 24px;
+      border: 1px solid #d8e2ec;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font: inherit;
+      margin-top: 8px;
+    }
+    button {
+      background: #174c70;
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #result { white-space: pre-line; }
+  </style>
+</head>
+<body>
+  <h1>Repeat Purchase Explorer</h1>
+  <p>Historical demo · Prediction date: 1 November 2011</p>
+  <p>Estimates repeat purchases within 30 days using prior purchase history.
+     Scores are not guarantees or evidence of campaign effectiveness.</p>
+
+  <form id="lookup">
+    <label for="customer">Customer ID</label><br>
+    <input id="customer" type="text" inputmode="numeric"
+           pattern="[0-9]+" value="17850" required>
+    <button type="submit">Get prediction</button>
+  </form>
+
+  <div id="result" role="status"></div>
+
+  <script>
+    const form = document.querySelector("#lookup");
+    const result = document.querySelector("#result");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      result.textContent = "Loading prediction…";
+
+      try {
+        const id = document.querySelector("#customer").value;
+        const response = await fetch(`/api/musteri/${id}`);
+        const data = await response.json();
+
+        if (response.status === 404) {
+          result.textContent = "Customer not found in this historical dataset.";
+        } else if (!response.ok) {
+          result.textContent = "The request could not be processed.";
+        } else {
+          result.textContent =
+            `Customer: ${data.musteri_id}\n` +
+            `Model score: ${(data.model_skoru * 100).toFixed(2)}%\n` +
+            `Decision threshold: ${(data.esik * 100).toFixed(0)}%\n` +
+            `Prediction: ${data.tahmin === 1
+              ? "Repeat purchase predicted"
+              : "Repeat purchase not predicted"}`;
+        }
+      } catch {
+        result.textContent = "Connection failed. Check that the API is running.";
+      }
+    });
+  </script>
+</body>
+</html>
