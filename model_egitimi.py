@@ -142,3 +142,19 @@ cikti = klasor / "data/processed/kasim_model_sonuclari.csv"
 kasim_sonuclar.to_csv(cikti, index=False, encoding="utf-8-sig")
 
 print("\nTahminler kaydedildi:", cikti)
+import joblib
+
+model_klasoru = klasor / "models"
+model_klasoru.mkdir(exist_ok=True)
+
+joblib.dump(
+    {
+        "pipeline": model,
+        "ozellikler": ozellikler,
+        "esik": 0.30,
+        "egitim_tarihi": "2011-09-01",
+    },
+    model_klasoru / "tekrar_alisveris.joblib",
+)
+
+print("\nModel kaydedildi:", model_klasoru / "tekrar_alisveris.joblib")
