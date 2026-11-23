@@ -85,3 +85,26 @@ loading this project's saved model.
 Processed snapshots and the saved model support the demo. Rebuilding from
 source requires the UCI workbook at `data/raw/Online Retail.xlsx`.
 Update local CSV source paths in Power BI before refreshing on another computer.
+
+## Dimensional Data Warehouse
+
+This project also includes a PostgreSQL retail sales warehouse
+and a connected Power BI report.
+
+The star schema contains fact_sales, dim_product, dim_customer,
+and dim_date. The fact table grain is one eligible source
+invoice-item row. Exact duplicate source rows are retained.
+
+Verified results:
+- 530,104 sales lines and 19,960 distinct invoices.
+- GBP 10,666,684.54 in positive sales amounts.
+- No sales with missing dimension relationships.
+- Power BI totals reconciled with PostgreSQL.
+
+Amounts exclude cancellations and do not represent net revenue.
+Missing customer identities map to a shared Unknown dimension member.
+
+See [warehouse documentation](docs/WAREHOUSE.md) for setup,
+data rules, and validation results.
+
+Power BI report: [Retail Data Warehouse](data/Retail_Data_Warehouse.pbix).
